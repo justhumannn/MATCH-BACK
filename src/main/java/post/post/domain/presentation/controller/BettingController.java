@@ -15,7 +15,7 @@ import java.util.List;
 public class BettingController {
     private final BettingService bettingService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ListBettingResponseDto getBetting(){
         return bettingService.getBettingCard();
     }

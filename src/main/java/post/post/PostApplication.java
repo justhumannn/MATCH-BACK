@@ -15,7 +15,9 @@ public class PostApplication {
      * - 이 클래스가 실행되면 스프링 컨테이너가 초기화되고 웹서버가 시작됩니다.
      */
     public static void main(String[] args) {
+
         SpringApplication.run(PostApplication.class, args);
+        System.out.println("localhost:8080");
     }
 
 }
