@@ -1,15 +1,18 @@
 package post.post.domain.application;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import post.post.domain.domain.entity.BettingEntity;
-import post.post.domain.domain.entity.TransectionEntity;
 import post.post.domain.domain.entity.UserEntity;
 import post.post.domain.domain.repository.BettingRepository;
 import post.post.domain.domain.repository.TransectionRepository;
 import post.post.domain.domain.repository.UserRepository;
 import post.post.domain.presentation.dto.req.UserBettingRequestDto;
+import post.post.domain.presentation.dto.res.ListUserMyBettingResponseDto;
+import post.post.domain.presentation.dto.res.UserMyBettingResponseDto;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -28,5 +31,12 @@ public class TransectionService {
             throw new IllegalArgumentException("보유금보다 높은 금액은 배팅할 수 없습니다.");
         }
         transectionRepository.save(userBettingRequestDto.toEntity(user,betting));
+    }
+
+    @Transactional(readOnly = true)
+    public ListUserMyBettingResponseDto getMyBettingHistory(String email){
+
+        List<UserMyBettingResponseDto> userMyBettingResponseDtoList = transectionRepository.findMyBettingHistoryByEmail(email);
+        return ListUserMyBettingResponseDto.of(userMyBettingResponseDtoList);
     }
 }
