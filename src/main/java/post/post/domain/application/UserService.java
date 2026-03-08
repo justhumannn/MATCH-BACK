@@ -22,4 +22,9 @@ public class UserService {
                 .build());
     }
 
+    @Transactional
+    public void costChange(String userEmail, Long cost){
+        UserEntity user = userRepository.findByEmail(userEmail).orElseThrow(IllegalArgumentException::new);
+        user.changeCost(user.getCost() - cost);
+    }
 }

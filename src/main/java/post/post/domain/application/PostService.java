@@ -53,7 +53,9 @@ public class PostService {
 
     @Transactional
     public void update(PostUpdateRequestDto postUpdateRequestDto) {
-        PostEntity postEntity = postRepository.findById(postUpdateRequestDto.getId()).orElseThrow(IllegalArgumentException::new);
+        PostEntity postEntity = postRepository.findById(
+                postUpdateRequestDto.getId())
+                .orElseThrow(IllegalArgumentException::new);
         // 엔티티의 상태 변경 후 저장
         postEntity.changePostEntity(postUpdateRequestDto.getTitle(), postUpdateRequestDto.getWriter(), postUpdateRequestDto.getContents());
         postRepository.save(postEntity);

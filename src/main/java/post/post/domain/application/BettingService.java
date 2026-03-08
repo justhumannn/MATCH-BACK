@@ -20,4 +20,10 @@ public class BettingService {
         List<BettingResponseDto> responseDtoList = bettingRepository.findAllBettingCardsWithStats();
         return ListBettingResponseDto.of(responseDtoList);
     }
+
+    @Transactional(readOnly = true)
+    public BettingResponseDto getBettingCardById(Long id){
+        return bettingRepository.findBettingCardWithStatsById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 배팅 카드를 찾을 수 없습니다"));
+    }
 }

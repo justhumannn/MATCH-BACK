@@ -27,4 +27,8 @@ public class UserEntity {
         this.email = email;
         this.cost = cost;
     }
+
+    public void changeCost(Long cost){
+        this.cost = cost;
+    }
 }
