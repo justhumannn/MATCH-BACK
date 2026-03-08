@@ -27,12 +27,6 @@ public class TransectionService {
         if (user.getCost() < userBettingRequestDto.bettingCost()){
             throw new IllegalArgumentException("보유금보다 높은 금액은 배팅할 수 없습니다.");
         }
-        TransectionEntity transectionEntity = TransectionEntity.saveTransectionBuilder()
-                .userEntity(user)
-                .bettingEntity(betting)
-                .bettingTeam(userBettingRequestDto.bettingTeam())
-                .bettingCost(userBettingRequestDto.bettingCost())
-                .build();
-        transectionRepository.save(transectionEntity);
+        transectionRepository.save(userBettingRequestDto.toEntity(user,betting));
     }
 }
