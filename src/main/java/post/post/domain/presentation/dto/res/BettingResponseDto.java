@@ -5,6 +5,7 @@ import post.post.domain.domain.entity.BettingEntity;
 
 @Builder
 public record BettingResponseDto (
+        Long id,
         String title,
         String blue,
         String red,

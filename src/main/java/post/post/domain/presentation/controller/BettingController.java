@@ -27,7 +27,7 @@ public class BettingController {
     }
 
     @GetMapping("/{bettingId}")
-    public BettingResponseDto getBettingById(@PathVariable("bettingId") Long bettingId){
+    public BettingResponseDto getBettingById(@PathVariable Long bettingId){
         return bettingService.getBettingCardById(bettingId);
     }
 

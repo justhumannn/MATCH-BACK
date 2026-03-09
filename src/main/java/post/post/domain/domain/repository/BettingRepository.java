@@ -13,7 +13,7 @@ public interface BettingRepository extends JpaRepository<BettingEntity, Long> {
 
     // 배팅 카드 정보와 트랜잭션 통계를 한 번에 JOIN해서 DTO로 바로 가져옵니다.
     @Query("SELECT new post.post.domain.presentation.dto.res.BettingResponseDto(" +
-            "b.title, b.blue, b.red, b.result, b.status, " +
+            "b.id, b.title, b.blue, b.red, b.result, b.status, " +
             "SUM(CASE WHEN t.bettingTeam = 'blue' THEN 1L ELSE 0L END), " +
             "SUM(CASE WHEN t.bettingTeam = 'red' THEN 1L ELSE 0L END), " +
             "COALESCE(SUM(CASE WHEN t.bettingTeam = 'blue' THEN t.bettingCost ELSE 0L END), 0L), " +
@@ -24,7 +24,7 @@ public interface BettingRepository extends JpaRepository<BettingEntity, Long> {
     List<BettingResponseDto> findAllBettingCardsWithStats();
 
     @Query("SELECT new post.post.domain.presentation.dto.res.BettingResponseDto(" +
-            "b.title, b.blue, b.red, b.result, b.status, " +
+            "b.id, b.title, b.blue, b.red, b.result, b.status, " +
             "SUM(CASE WHEN t.bettingTeam = 'blue' THEN 1L ELSE 0L END), " +
             "SUM(CASE WHEN t.bettingTeam = 'red' THEN 1L ELSE 0L END), " +
             "COALESCE(SUM(CASE WHEN t.bettingTeam = 'blue' THEN t.bettingCost ELSE 0L END), 0L), " +

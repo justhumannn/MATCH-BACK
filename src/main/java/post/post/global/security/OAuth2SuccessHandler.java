@@ -23,7 +23,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String token = jwtUtil.createToken(email);
 
-        String redirectUrl = "http://localhost:8080/home?token=" + token;
+        String redirectUrl = "http://localhost:5173?token=" + token;
         response.sendRedirect(redirectUrl);
     }
 }

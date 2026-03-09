@@ -1,8 +1,8 @@
 package post.post.domain.application;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import post.post.domain.domain.entity.UserEntity;
 import post.post.domain.domain.repository.UserRepository;
 import post.post.domain.presentation.dto.req.UserAddRequestDto;
