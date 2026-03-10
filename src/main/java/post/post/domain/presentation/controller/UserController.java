@@ -24,7 +24,7 @@ public class UserController {
         }
     }
     @GetMapping("/mypage")
-    public ListUserMyBettingResponseDto getMyBettings(Authentication authentication){
+    public ListUserMyBettingResponseDto getMyBetting(Authentication authentication){
         String email = authentication.getName();
         return transectionService.getMyBettingHistory(email);
     }
