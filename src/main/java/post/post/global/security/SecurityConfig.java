@@ -24,7 +24,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final JwtFilter jwtFilter;
-    @Value("${FRONT-URL:http://localhost:5173}")
+    @Value("${FRONT_URL:http://localhost:5173}")
     private String frontUrl;
 
     @Bean

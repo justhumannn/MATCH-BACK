@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtUtil jwtUtil;
-    @Value("${FRONT-URL:http://localhost:5173}")
+    @Value("${FRONT_URL:http://localhost:5173}")
     private String frontUrl;
 
     @Override
