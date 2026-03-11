@@ -12,7 +12,7 @@ COPY src src
 RUN sed -i 's/\r$//' gradlew
 RUN chmod +x ./gradlew
 
-RUN ./gradlew clean build -x test
+RUN ./gradlew clean build -x test --no-daemon
 
 FROM eclipse-temurin:21-jdk-alpine
 
