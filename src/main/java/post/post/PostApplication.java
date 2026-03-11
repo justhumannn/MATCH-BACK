@@ -10,5 +10,4 @@ public class PostApplication {
         SpringApplication.run(PostApplication.class, args);
         System.out.println("http://localhost:8080/oauth2/authorization/google");
     }
-
 }
