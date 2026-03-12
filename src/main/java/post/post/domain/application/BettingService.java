@@ -3,7 +3,9 @@ package post.post.domain.application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import post.post.domain.domain.entity.BettingEntity;
 import post.post.domain.domain.repository.BettingRepository;
+import post.post.domain.presentation.dto.req.BettingAddRequestDto;
 import post.post.domain.presentation.dto.res.BettingResponseDto;
 import post.post.domain.presentation.dto.res.ListBettingResponseDto;
 
@@ -25,5 +27,19 @@ public class BettingService {
     public BettingResponseDto getBettingCardById(Long id){
         return bettingRepository.findBettingCardWithStatsById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 배팅 카드를 찾을 수 없습니다"));
+    }
+
+    @Transactional
+    public Long postAddBetting(BettingAddRequestDto bettingAddRequestDto){
+        BettingEntity bettingEntity = BettingEntity.saveBettingBuilder()
+                .title(bettingAddRequestDto.title())
+                .blue(bettingAddRequestDto.blue())
+                .red(bettingAddRequestDto.red())
+                .result("미정")
+                .status("시작 전")
+                .build();
+        BettingEntity saveBetting = bettingRepository.save(bettingEntity);
+
+        return saveBetting.getId();
     }
 }

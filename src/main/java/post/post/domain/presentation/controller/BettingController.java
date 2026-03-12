@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import post.post.domain.application.BettingService;
 import post.post.domain.application.TransectionService;
 import post.post.domain.application.UserService;
+import post.post.domain.presentation.dto.req.BettingAddRequestDto;
 import post.post.domain.presentation.dto.req.UserBettingRequestDto;
 import post.post.domain.presentation.dto.res.BettingResponseDto;
 import post.post.domain.presentation.dto.res.ListBettingResponseDto;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/betting")
@@ -38,6 +37,8 @@ public class BettingController {
         transectionService.postUserBetting(userBettingRequestDto,userEmail);
         userService.costChange(userEmail,userBettingRequestDto.bettingCost());
     }
-
-
+    @PostMapping("/save")
+    public Long postAddBetting(@RequestBody @Valid BettingAddRequestDto bettingAddRequestDto){
+        return bettingService.postAddBetting(bettingAddRequestDto);
+    }
 }
