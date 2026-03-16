@@ -2,6 +2,8 @@ package post.post.domain.presentation.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import post.post.domain.application.BettingService;
@@ -38,7 +40,8 @@ public class BettingController {
         userService.costChange(userEmail,userBettingRequestDto.bettingCost());
     }
     @PostMapping("/save")
-    public Long postAddBetting(@RequestBody @Valid BettingAddRequestDto bettingAddRequestDto){
-        return bettingService.postAddBetting(bettingAddRequestDto);
+    public ResponseEntity<Long> postAddBetting(@RequestBody @Valid BettingAddRequestDto bettingAddRequestDto){
+        Long response = bettingService.postAddBetting(bettingAddRequestDto);
+        return ResponseEntity.ok(response);
     }
 }
