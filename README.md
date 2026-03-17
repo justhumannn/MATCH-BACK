@@ -7,7 +7,7 @@ MATCH-BACK은 Java 기반의 백엔드 서비스입니다. 구글로 로그인, 
 - **Language:** Java
 - **Build Tool:** Gradle
 - **Containerization:** Docker
-- **Framework:** Spring Boot (추정)
+- **Framework:** Spring Boot
 
 ## 📁 Project Structure (프로젝트 구조)
 
