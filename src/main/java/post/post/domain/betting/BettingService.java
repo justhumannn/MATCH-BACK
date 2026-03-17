@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import post.post.domain.betting.dto.req.BettingAddRequestDto;
 import post.post.domain.betting.dto.res.BettingResponseDto;
 import post.post.domain.betting.dto.res.ListBettingResponseDto;
+import post.post.global.exception.BusinessException;
+import post.post.global.exception.ErrorCode;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class BettingService {
     @Transactional(readOnly = true)
     public BettingResponseDto getBettingCardById(Long id){
         return bettingRepository.findBettingCardWithStatsById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 배팅 카드를 찾을 수 없습니다"));
+                .orElseThrow(() -> new BusinessException(ErrorCode.BETTING_CARD_NOT_FOUND));
     }
 
     @Transactional

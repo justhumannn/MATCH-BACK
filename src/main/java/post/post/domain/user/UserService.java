@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import post.post.domain.user.dto.req.UserAddRequestDto;
+import post.post.global.exception.BusinessException;
+import post.post.global.exception.ErrorCode;
 
 
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class UserService {
     @Transactional
     public void deductUserBalance(String userEmail, Long amount){
         UserEntity user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         user.deductBalance(amount);
     }
 }

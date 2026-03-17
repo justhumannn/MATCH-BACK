@@ -10,6 +10,8 @@ import post.post.domain.participation.dto.res.ListUserMyBettingResponseDto;
 import post.post.domain.participation.dto.res.UserMyBettingResponseDto;
 import post.post.domain.user.UserEntity;
 import post.post.domain.user.UserRepository;
+import post.post.global.exception.BusinessException;
+import post.post.global.exception.ErrorCode;
 
 import java.util.List;
 
@@ -23,9 +25,9 @@ public class BettingParticipationService {
     @Transactional
     public void postUserBetting(UserBettingRequestDto userBettingRequestDto, String email){
         UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         BettingEntity betting = bettingRepository.findById(userBettingRequestDto.bettingId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 배팅을 찾을 수 없습니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.BETTING_NOT_FOUND));
 
         // 유저 잔액 차감 (내부적으로 잔액 확인 및 예외 발생 처리)
         user.deductBalance(userBettingRequestDto.bettingCost());

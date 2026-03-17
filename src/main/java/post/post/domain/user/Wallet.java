@@ -2,6 +2,8 @@ package post.post.domain.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import post.post.global.exception.BusinessException;
+import post.post.global.exception.ErrorCode;
 
 @NoArgsConstructor
 @Getter
@@ -24,17 +26,17 @@ public class Wallet {
 
     public void charge(long amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("충전 금액은 0보다 커야 합니다.");
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }
         this.balance += amount;
     }
 
     public void deduct(long amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("차감 금액은 0보다 커야 합니다.");
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }
         if (this.balance < amount) {
-            throw new IllegalArgumentException("잔액이 부족합니다.");
+            throw new BusinessException(ErrorCode.INSUFFICIENT_BALANCE);
         }
         this.balance -= amount;
     }

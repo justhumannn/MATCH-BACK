@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import post.post.domain.user.UserRepository;
 import post.post.domain.user.UserService;
 import post.post.domain.user.dto.req.UserAddRequestDto;
+import post.post.global.exception.BusinessException;
+import post.post.global.exception.ErrorCode;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
@@ -22,9 +24,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         String email = oAuth2User.getAttribute("email");
         String name = oAuth2User.getAttribute("name");
+        
         if (email == null || !email.endsWith("@bssm.hs.kr")) {
-            throw new OAuth2AuthenticationException("학교 계정(@bssm.hs.kr)으로만 로그인할 수 있습니다.");
+            throw new BusinessException(ErrorCode.UNAUTHORIZED);
         }
+
         if (userRepository.findByEmail(email).isEmpty()) {
             UserAddRequestDto addRequestDto = UserAddRequestDto.builder()
                     .name(name)
