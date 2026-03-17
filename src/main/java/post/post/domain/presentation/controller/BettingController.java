@@ -2,7 +2,6 @@ package post.post.domain.presentation.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +27,8 @@ public class BettingController {
     }
 
     @GetMapping("/{bettingId}")
-    public BettingResponseDto getBettingById(@PathVariable Long bettingId){
-        return bettingService.getBettingCardById(bettingId);
+    public ResponseEntity<BettingResponseDto> getBettingById(@PathVariable Long bettingId){
+        return ResponseEntity.ok(bettingService.getBettingCardById(bettingId));
     }
 
     @PostMapping("")
@@ -43,5 +42,9 @@ public class BettingController {
     public ResponseEntity<Long> postAddBetting(@RequestBody @Valid BettingAddRequestDto bettingAddRequestDto){
         Long response = bettingService.postAddBetting(bettingAddRequestDto);
         return ResponseEntity.ok(response);
+    }
+    @DeleteMapping("/del/{bettingId}")
+    public void deleteBettingById(@PathVariable Long bettingId){
+        bettingService.deleteDeleteBetting(bettingId);
     }
 }

@@ -1,6 +1,7 @@
 package post.post.domain.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import post.post.domain.domain.entity.TransectionEntity;
@@ -14,4 +15,8 @@ public interface TransectionRepository extends JpaRepository<TransectionEntity,L
             "FROM TransectionEntity t " +
             "WHERE t.userEntity.email = :email")
     List<UserMyBettingResponseDto> findMyBettingHistoryByEmail(@Param("email") String email);
+
+    @Modifying
+    @Query("delete from TransectionEntity t where t.bettingEntity.id = :bettingId")
+    void deleteByBettingId(@Param("bettingId") Long bettingId);
 }
