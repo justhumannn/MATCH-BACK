@@ -1,7 +1,7 @@
-package post.post.domain.presentation.dto.res;
+package post.post.domain.betting.dto.res;
 
 import lombok.Builder;
-import post.post.domain.domain.entity.BettingEntity;
+import post.post.domain.betting.BettingEntity;
 
 @Builder
 public record BettingResponseDto (

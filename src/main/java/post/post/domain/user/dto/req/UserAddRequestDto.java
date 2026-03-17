@@ -1,4 +1,4 @@
-package post.post.domain.presentation.dto.req;
+package post.post.domain.user.dto.req;
 
 import lombok.Builder;
 

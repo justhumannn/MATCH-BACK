@@ -1,14 +1,11 @@
-package post.post.domain.application;
+package post.post.domain.betting;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import post.post.domain.domain.entity.BettingEntity;
-import post.post.domain.domain.repository.BettingRepository;
-import post.post.domain.domain.repository.TransectionRepository;
-import post.post.domain.presentation.dto.req.BettingAddRequestDto;
-import post.post.domain.presentation.dto.res.BettingResponseDto;
-import post.post.domain.presentation.dto.res.ListBettingResponseDto;
+import post.post.domain.betting.dto.req.BettingAddRequestDto;
+import post.post.domain.betting.dto.res.BettingResponseDto;
+import post.post.domain.betting.dto.res.ListBettingResponseDto;
 
 import java.util.List;
 
@@ -17,7 +14,6 @@ import java.util.List;
 public class BettingService {
 
     private final BettingRepository bettingRepository;
-    private final TransectionRepository transectionRepository;
 
     @Transactional(readOnly = true)
     public ListBettingResponseDto getBettingCard(){
@@ -47,7 +43,6 @@ public class BettingService {
 
     @Transactional
     public void deleteDeleteBetting(Long id){
-        transectionRepository.deleteByBettingId(id);
         bettingRepository.deleteById(id);
     }
 }

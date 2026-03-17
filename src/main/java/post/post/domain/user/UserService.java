@@ -1,11 +1,9 @@
-package post.post.domain.application;
+package post.post.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import post.post.domain.domain.entity.UserEntity;
-import post.post.domain.domain.repository.UserRepository;
-import post.post.domain.presentation.dto.req.UserAddRequestDto;
+import post.post.domain.user.dto.req.UserAddRequestDto;
 
 
 @RequiredArgsConstructor
@@ -18,13 +16,14 @@ public class UserService {
         userRepository.save(UserEntity.saveUserBuilder()
                 .name(userAddRequestDto.name())
                 .email(userAddRequestDto.email())
-                .cost(1000000L)
+                .initialBalance(1000000L)
                 .build());
     }
 
     @Transactional
-    public void costChange(String userEmail, Long cost){
-        UserEntity user = userRepository.findByEmail(userEmail).orElseThrow(IllegalArgumentException::new);
-        user.changeCost(user.getCost() - cost);
+    public void deductUserBalance(String userEmail, Long amount){
+        UserEntity user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        user.deductBalance(amount);
     }
 }

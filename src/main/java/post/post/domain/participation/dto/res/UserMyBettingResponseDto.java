@@ -1,4 +1,4 @@
-package post.post.domain.presentation.dto.res;
+package post.post.domain.participation.dto.res;
 
 import lombok.Builder;
 

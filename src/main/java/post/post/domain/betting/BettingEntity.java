@@ -1,4 +1,4 @@
-package post.post.domain.domain.entity;
+package post.post.domain.betting;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,6 +27,9 @@ public class BettingEntity {
 
     @Column(name = "status", nullable = false)
     private String status;
+
+    @OneToMany(mappedBy = "betting", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<post.post.domain.participation.BettingParticipation> participations = new java.util.ArrayList<>();
 
     @Builder(builderMethodName = "saveBettingBuilder")
     public BettingEntity(String title, String blue, String red, String result, String status){

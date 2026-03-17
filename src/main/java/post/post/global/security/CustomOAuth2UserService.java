@@ -6,9 +6,9 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import post.post.domain.application.UserService;
-import post.post.domain.domain.repository.UserRepository;
-import post.post.domain.presentation.dto.req.UserAddRequestDto;
+import post.post.domain.user.UserRepository;
+import post.post.domain.user.UserService;
+import post.post.domain.user.dto.req.UserAddRequestDto;
 
 @RequiredArgsConstructor
 @Service

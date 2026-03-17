@@ -1,4 +1,4 @@
-package post.post.domain.presentation.dto.req;
+package post.post.domain.betting.dto.req;
 
 public record BettingAddRequestDto(
         String title,

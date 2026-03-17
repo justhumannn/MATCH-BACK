@@ -19,4 +19,12 @@ public class GlobalExceptionHandler {
                 )
                 .build();
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResponse handleIllegalArgumentException(IllegalArgumentException e) {
+        return ErrorResponse.builder()
+                .code(HttpStatus.BAD_REQUEST.name())
+                .message(e.getMessage())
+                .build();
+    }
 }
