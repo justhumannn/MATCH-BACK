@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import post.post.domain.betting.dto.req.BettingAddRequestDto;
+import post.post.domain.betting.dto.req.BettingResolveRequestDto;
 import post.post.domain.betting.dto.res.BettingResponseDto;
 import post.post.domain.betting.dto.res.ListBettingResponseDto;
 import post.post.domain.participation.BettingParticipationService;
@@ -44,5 +45,10 @@ public class BettingController {
     @DeleteMapping("/del/{bettingId}")
     public void deleteBettingById(@PathVariable Long bettingId){
         bettingService.deleteDeleteBetting(bettingId);
+    }
+
+    @PostMapping("/{bettingId}/resolve")
+    public void resolveBetting(@PathVariable Long bettingId, @RequestBody @Valid BettingResolveRequestDto requestDto) {
+        bettingService.resolveBetting(bettingId, requestDto);
     }
 }

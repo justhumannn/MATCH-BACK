@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import post.post.domain.betting.dto.req.BettingAddRequestDto;
+import post.post.domain.betting.dto.req.BettingResolveRequestDto;
 import post.post.domain.betting.dto.res.BettingResponseDto;
 import post.post.domain.betting.dto.res.ListBettingResponseDto;
 import post.post.global.exception.BusinessException;
@@ -49,6 +50,41 @@ public class BettingService {
     @Transactional
     public void deleteDeleteBetting(Long id){
         bettingRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void resolveBetting(Long id, BettingResolveRequestDto requestDto) {
+        BettingEntity betting = bettingRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BETTING_NOT_FOUND));
+
+        if (!"미정".equals(betting.getResult())) {
+            throw new BusinessException(ErrorCode.BETTING_ALREADY_RESOLVED);
+        }
+
+        String winningTeam = requestDto.winningTeam();
+        
+        long totalWinningPool = 0;
+        long totalLosingPool = 0;
+
+        for (post.post.domain.participation.BettingParticipation participation : betting.getParticipations()) {
+            if (participation.getBettingTeam().equals(winningTeam)) {
+                totalWinningPool += participation.getBettingCost();
+            } else {
+                totalLosingPool += participation.getBettingCost();
+            }
+        }
+
+        for (post.post.domain.participation.BettingParticipation participation : betting.getParticipations()) {
+            if (participation.getBettingTeam().equals(winningTeam)) {
+                long payout = participation.getBettingCost();
+                if (totalWinningPool > 0 && totalLosingPool > 0) {
+                    payout += (long) ((double) participation.getBettingCost() / totalWinningPool * totalLosingPool);
+                }
+                participation.getUser().chargeBalance(payout);
+            }
+        }
+
+        betting.resolveResult(winningTeam);
     }
 
     @Scheduled(fixedRate = 60000)

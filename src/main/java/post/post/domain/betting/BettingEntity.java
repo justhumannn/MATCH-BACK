@@ -44,4 +44,9 @@ public class BettingEntity {
         this.status = status;
         this.time = time;
     }
+
+    public void resolveResult(String winningTeam) {
+        this.result = winningTeam;
+        this.status = "종료";
+    }
 }
