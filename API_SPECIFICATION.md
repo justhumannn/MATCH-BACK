@@ -1,33 +1,33 @@
-# API Specification
+# API 명세서
 
-This document details the API endpoints for the MATCH-BACK project.
+이 문서는 MATCH-BACK 프로젝트의 API 엔드포인트에 대한 상세 정보를 제공합니다.
 
-## 🔑 Authentication
+## 🔑 인증 (Authentication)
 
-The application uses Google OAuth2 for authentication. After a successful login, a JWT token is generated and passed via a query parameter or header.
+본 애플리케이션은 Google OAuth2를 사용하여 인증을 처리합니다. 성공적으로 로그인하면 JWT 토큰이 생성되며, 쿼리 파라미터나 헤더를 통해 전달됩니다.
 
-- **Login URL**: `GET /oauth2/authorization/google`
-- **JWT Header**: `Authorization: Bearer <token>`
+- **로그인 URL**: `GET /oauth2/authorization/google`
+- **JWT 헤더**: `Authorization: Bearer <token>`
 
 ---
 
-## 🏆 Betting APIs
+## 🏆 배팅 API (Betting APIs)
 
-### 1. Get All Bettings
-Retrieve a list of all available betting cards with statistics.
+### 1. 모든 배팅 목록 조회
+통계 정보를 포함한 사용 가능한 모든 배팅 카드 목록을 가져옵니다.
 
 - **URL**: `/betting`
 - **Method**: `GET`
-- **Auth Required**: No
-- **Response**: `ListBettingResponseDto`
+- **인증 필요 여부**: 아니오
+- **응답 (Response)**: `ListBettingResponseDto`
   ```json
   {
     "listBettingResponseDto": [
       {
         "id": 1,
-        "title": "World Cup Final",
-        "blue": "Argentina",
-        "red": "France",
+        "title": "월드컵 결승전",
+        "blue": "아르헨티나",
+        "red": "프랑스",
         "result": "미정",
         "status": "진행 중",
         "time": "2026-04-12T23:00:00",
@@ -40,21 +40,21 @@ Retrieve a list of all available betting cards with statistics.
   }
   ```
 
-### 2. Get Betting Detail
-Retrieve detailed information for a specific betting card.
+### 2. 배팅 상세 조회
+특정 배팅 카드에 대한 상세 정보를 가져옵니다.
 
 - **URL**: `/betting/{bettingId}`
 - **Method**: `GET`
-- **Auth Required**: No
-- **Response**: `BettingResponseDto` (Same structure as above)
+- **인증 필요 여부**: 아니오
+- **응답 (Response)**: `BettingResponseDto` (위와 동일한 구조)
 
-### 3. Participate in Betting
-Submit a bet for a specific team.
+### 3. 배팅 참여
+특정 팀에 대해 배팅을 제출합니다.
 
 - **URL**: `/betting`
 - **Method**: `POST`
-- **Auth Required**: Yes
-- **Request Body**: `UserBettingRequestDto`
+- **인증 필요 여부**: 예
+- **요청 본문 (Request Body)**: `UserBettingRequestDto`
   ```json
   {
     "bettingId": 1,
@@ -62,49 +62,49 @@ Submit a bet for a specific team.
     "bettingCost": 1000
   }
   ```
-- **Response**: `200 OK`
+- **응답 (Response)**: `200 OK`
 
-### 4. Create Betting (Admin)
-Create a new betting entry.
+### 4. 배팅 생성 (관리자용)
+새로운 배팅 항목을 생성합니다.
 
 - **URL**: `/betting/save`
 - **Method**: `POST`
-- **Auth Required**: Yes (Required Role/Privilege)
-- **Request Body**: `BettingAddRequestDto`
+- **인증 필요 여부**: 예 (관리자 권한 필요)
+- **요청 본문 (Request Body)**: `BettingAddRequestDto`
   ```json
   {
-    "title": "Match Title",
-    "blue": "Team A",
-    "red": "Team B",
+    "title": "경기 제목",
+    "blue": "팀 A",
+    "red": "팀 B",
     "time": "2026-12-31T23:59:59"
   }
   ```
-- **Response**: `Long (bettingId)`
+- **응답 (Response)**: `Long (생성된 bettingId)`
 
-### 5. Delete Betting (Admin)
-Remove a betting entry.
+### 5. 배팅 삭제 (관리자용)
+배팅 항목을 제거합니다.
 
 - **URL**: `/betting/del/{bettingId}`
 - **Method**: `DELETE`
-- **Auth Required**: Yes
-- **Response**: `200 OK`
+- **인증 필요 여부**: 예
+- **응답 (Response)**: `200 OK`
 
 ---
 
-## 👤 User APIs
+## 👤 유저 API (User APIs)
 
-### 1. My Page History
-Retrieve the betting history of the authenticated user.
+### 1. 마이페이지 배팅 내역 조회
+인증된 유저의 배팅 참여 이력을 가져옵니다.
 
 - **URL**: `/mypage`
 - **Method**: `GET`
-- **Auth Required**: Yes
-- **Response**: `ListUserMyBettingResponseDto`
+- **인증 필요 여부**: 예
+- **응답 (Response)**: `ListUserMyBettingResponseDto`
   ```json
   {
     "listUserMyBettingResponseDto": [
       {
-        "title": "World Cup Final",
+        "title": "월드컵 결승전",
         "bettingTeam": "blue",
         "bettingCost": 1000
       }
@@ -112,24 +112,24 @@ Retrieve the betting history of the authenticated user.
   }
   ```
 
-### 2. Home Info
-Simple diagnostic endpoint.
+### 2. 홈 정보 조회
+간단한 진단용 엔드포인트입니다.
 
 - **URL**: `/home`
 - **Method**: `GET`
-- **Parameters**: `token` (optional)
-- **Response**: String containing JWT info.
+- **파라미터**: `token` (선택 사항)
+- **응답 (Response)**: JWT 정보를 포함한 문자열.
 
 ---
 
-## ⚠️ Error Codes
+## ⚠️ 에러 코드 (Error Codes)
 
-| Error Code | HTTP Status | Description |
+| 에러 코드 | HTTP 상태 | 설명 |
 | :--- | :--- | :--- |
-| `COMMON_500` | 500 | Internal Server Error |
-| `USER_404` | 404 | User not found |
-| `USER_400` | 400 | Insufficient balance |
-| `BETTING_404` | 404 | Betting not found |
-| `BETTING_400` | 400 | Betting already ended |
-| `AUTH_401` | 401 | Unauthorized / Invalid token |
-| `AUTH_403` | 403 | Forbidden |
+| `COMMON_500` | 500 | 서버 내부 에러 |
+| `USER_404` | 404 | 유저를 찾을 수 없음 |
+| `USER_400` | 400 | 잔액 부족 |
+| `BETTING_404` | 404 | 배팅을 찾을 수 없음 |
+| `BETTING_400` | 400 | 이미 종료된 배팅 |
+| `AUTH_401` | 401 | 인증되지 않음 / 유효하지 않은 토큰 |
+| `AUTH_403` | 403 | 권한 없음 |
