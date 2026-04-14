@@ -2,6 +2,7 @@ package post.post.domain.betting.dto.res;
 
 import lombok.Builder;
 import post.post.domain.betting.BettingEntity;
+import java.time.LocalDateTime;
 
 @Builder
 public record BettingResponseDto (
@@ -11,6 +12,7 @@ public record BettingResponseDto (
         String red,
         String result,
         String status,
+        LocalDateTime time,
         Long blueBettingCount,
         Long redBettingCount,
         Long blueBettingCost,

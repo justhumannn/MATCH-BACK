@@ -22,6 +22,7 @@ public class BettingRepositoryImpl implements BettingRepositoryCustom {
             .red(rs.getString("red"))
             .result(rs.getString("result"))
             .status(rs.getString("status"))
+            .time(rs.getTimestamp("time") != null ? rs.getTimestamp("time").toLocalDateTime() : null)
             .blueBettingCount(rs.getLong("blue_count"))
             .redBettingCount(rs.getLong("red_count"))
             .blueBettingCost(rs.getLong("blue_cost"))
@@ -30,21 +31,21 @@ public class BettingRepositoryImpl implements BettingRepositoryCustom {
 
     @Override
     public List<BettingResponseDto> findAllBettingCardsWithStats() {
-        String sql = "SELECT b.id, b.title, b.blue, b.red, b.result, b.status, " +
+        String sql = "SELECT b.id, b.title, b.blue, b.red, b.result, b.status, b.time, " +
                 "COUNT(CASE WHEN bp.betting_team = 'blue' THEN 1 END) AS blue_count, " +
                 "COUNT(CASE WHEN bp.betting_team = 'red' THEN 1 END) AS red_count, " +
                 "COALESCE(SUM(CASE WHEN bp.betting_team = 'blue' THEN bp.betting_cost ELSE 0 END), 0) AS blue_cost, " +
                 "COALESCE(SUM(CASE WHEN bp.betting_team = 'red' THEN bp.betting_cost ELSE 0 END), 0) AS red_cost " +
                 "FROM bettings b " +
                 "LEFT JOIN betting_participations bp ON bp.betting_id = b.id " +
-                "GROUP BY b.id, b.title, b.blue, b.red, b.result, b.status";
+                "GROUP BY b.id, b.title, b.blue, b.red, b.result, b.status, b.time";
 
         return jdbcTemplate.query(sql, rowMapper);
     }
 
     @Override
     public Optional<BettingResponseDto> findBettingCardWithStatsById(Long bettingId) {
-        String sql = "SELECT b.id, b.title, b.blue, b.red, b.result, b.status, " +
+        String sql = "SELECT b.id, b.title, b.blue, b.red, b.result, b.status, b.time, " +
                 "COUNT(CASE WHEN bp.betting_team = 'blue' THEN 1 END) AS blue_count, " +
                 "COUNT(CASE WHEN bp.betting_team = 'red' THEN 1 END) AS red_count, " +
                 "COALESCE(SUM(CASE WHEN bp.betting_team = 'blue' THEN bp.betting_cost ELSE 0 END), 0) AS blue_cost, " +
@@ -52,7 +53,7 @@ public class BettingRepositoryImpl implements BettingRepositoryCustom {
                 "FROM bettings b " +
                 "LEFT JOIN betting_participations bp ON bp.betting_id = b.id " +
                 "WHERE b.id = ? " +
-                "GROUP BY b.id, b.title, b.blue, b.red, b.result, b.status";
+                "GROUP BY b.id, b.title, b.blue, b.red, b.result, b.status, b.time";
 
         return jdbcTemplate.query(sql, rowMapper, bettingId).stream().findFirst();
     }

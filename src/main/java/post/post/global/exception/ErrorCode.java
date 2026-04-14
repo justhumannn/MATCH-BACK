@@ -20,6 +20,7 @@ public enum ErrorCode {
     // Betting
     BETTING_NOT_FOUND(HttpStatus.NOT_FOUND, "BETTING_404", "해당 배팅을 찾을 수 없습니다."),
     BETTING_CARD_NOT_FOUND(HttpStatus.NOT_FOUND, "BETTING_404", "해당 배팅 카드를 찾을 수 없습니다."),
+    BETTING_ALREADY_ENDED(HttpStatus.BAD_REQUEST, "BETTING_400", "이미 종료된 배팅입니다."),
 
     // Security
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "AUTH_401", "인증되지 않은 사용자입니다."),

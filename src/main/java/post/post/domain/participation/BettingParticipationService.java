@@ -29,6 +29,10 @@ public class BettingParticipationService {
         BettingEntity betting = bettingRepository.findById(userBettingRequestDto.bettingId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.BETTING_NOT_FOUND));
 
+        if ("종료".equals(betting.getStatus())) {
+            throw new BusinessException(ErrorCode.BETTING_ALREADY_ENDED);
+        }
+
         // 유저 잔액 차감 (내부적으로 잔액 확인 및 예외 발생 처리)
         user.deductBalance(userBettingRequestDto.bettingCost());
 

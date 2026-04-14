@@ -2,6 +2,7 @@ package post.post.domain.betting;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -28,15 +29,19 @@ public class BettingEntity {
     @Column(name = "status", nullable = false)
     private String status;
 
+    @Column(name = "time")
+    private LocalDateTime time;
+
     @OneToMany(mappedBy = "betting", cascade = CascadeType.ALL, orphanRemoval = true)
     private java.util.List<post.post.domain.participation.BettingParticipation> participations = new java.util.ArrayList<>();
 
     @Builder(builderMethodName = "saveBettingBuilder")
-    public BettingEntity(String title, String blue, String red, String result, String status){
+    public BettingEntity(String title, String blue, String red, String result, String status, LocalDateTime time){
         this.title = title;
         this.blue = blue;
         this.red = red;
         this.result = result;
         this.status = status;
+        this.time = time;
     }
 }
